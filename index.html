@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://cdn3d.iconscout.com/3d/free/thumb/free-playstore-3d-logo-download-in-png-blend-fbx-gltf-file-formats--google-play-store-brand-vol-1-pack-logos-3640288.png?f=webp" type="image/png">
+    <title>Fake Store</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #202124;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: white;
+            padding: 12px 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+        }
+        
+        .logo span {
+            font-size: 18px;
+            font-weight: 500;
+            color: #5f6368;
+        }
+        
+        .search-bar {
+            flex-grow: 1;
+            margin: 0 20px;
+            position: relative;
+        }
+        
+        .search-bar input {
+            width: 100%;
+            padding: 12px 16px 12px 48px;
+            border: 1px solid #dfe1e5;
+            border-radius: 24px;
+            font-size: 16px;
+            outline: none;
+            background-color: #f1f3f4;
+            transition: background-color 0.2s;
+        }
+        
+        .search-bar input:focus {
+            background-color: white;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        
+        .search-bar i {
+            position: absolute;
+            top: 12px;
+            left: 16px;
+            color: #5f6368;
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-actions button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #5f6368;
+            margin-left: 16px;
+            font-size: 20px;
+        }
+        
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            margin-left: 16px;
+            background-color: #1a73e8;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        /* Navigation Styles */
+        nav {
+            background-color: white;
+            padding: 0 20px;
+            border-bottom: 1px solid #dadce0;
+            overflow-x: auto;
+            white-space: nowrap;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        nav::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .nav-container {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .nav-item {
+            padding: 16px 12px;
+            margin-right: 8px;
+            font-size: 14px;
+            color: #5f6368;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .nav-item.active {
+            color: #1a73e8;
+            font-weight: 500;
+        }
+        
+        .nav-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 12px;
+            right: 12px;
+            height: 3px;
+            background-color: #1a73e8;
+            border-radius: 3px 3px 0 0;
+        }
+        
+        /* Main Content Styles */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .section-title {
+            font-size: 20px;
+            font-weight: 500;
+            margin: 24px 0 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .section-title a {
+            font-size: 14px;
+            color: #1a73e8;
+        }
+        
+        /* App Card Styles */
+        .app-row {
+            display: flex;
+            overflow-x: auto;
+            padding-bottom: 16px;
+            margin-bottom: 8px;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        .app-row::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .app-card {
+            min-width: 110px;
+            margin-right: 16px;
+            cursor: pointer;
+        }
+        
+        .app-icon {
+            width: 110px;
+            height: 110px;
+            border-radius: 20px;
+            margin-bottom: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .app-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .app-name {
+            font-size: 14px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 2px;
+        }
+        
+        .app-developer {
+            font-size: 12px;
+            color: #5f6368;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .app-rating {
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+            color: #5f6368;
+            margin-top: 2px;
+        }
+        
+        .app-rating i {
+            color: #fbbc04;
+            font-size: 12px;
+            margin-right: 4px;
+        }
+        
+        /* Featured Banner Styles */
+        .featured-banner {
+            height: 200px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 24px;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .featured-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .banner-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 16px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+            color: white;
+        }
+        
+        .banner-title {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        
+        .banner-description {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        /* Large App Card Styles */
+        .large-app-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .large-app-card {
+            cursor: pointer;
+        }
+        
+        .large-app-icon {
+            width: 100%;
+            position: relative;
+            padding-top: 70%;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .large-app-icon img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Bottom Navigation for Mobile */
+        .bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: white;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+        
+        .bottom-nav-container {
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0;
+        }
+        
+        .bottom-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 10px;
+            color: #5f6368;
+        }
+        
+        .bottom-nav-item i {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+        
+        .bottom-nav-item.active {
+            color: #1a73e8;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .search-bar {
+                margin: 0 12px;
+            }
+            
+            .user-actions button {
+                display: none;
+            }
+            
+            .bottom-nav {
+                display: block;
+            }
+            
+            main {
+                padding-bottom: 64px;
+            }
+        }
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="https://static-00.iconduck.com/assets.00/google-play-icon-2048x2048-487quz63.png" alt="Play Store">
+                <span>Fake Store</span>
+            </div>
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search for apps & games">
+            </div>
+            <div class="user-actions">
+                <button><i class="fas fa-bell"></i></button>
+                <div class="user-avatar">U</div>
+            </div>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="nav-container">
+            <div class="nav-item active">For you</div>
+            <div class="nav-item">Top charts</div>
+            <div class="nav-item">Kids</div>
+            <div class="nav-item">Categories</div>
+            <div class="nav-item">Editor's Choice</div>
+            <div class="nav-item">Premium</div>
+            <div class="nav-item">New</div>
+        </div>
+    </nav>
+    
+    <main>
+        <div class="featured-banner">
+            <img src="https://horizonchase2.com/_next/image?url=https%3A%2F%2Fimages.prismic.io%2Fhorizon-chase-2%2F481b345e-66ab-43dc-9559-e3a29797bcb5_hc2-hero-banner.jpg&w=3840&q=100" alt="Featured App">
+            <div class="banner-content">
+                <div class="banner-title">Featured: Horizon Chase</div>
+                <div class="banner-description">Race through stunning landscapes in this retro arcade racer</div>
+            </div>
+        </div>
+        
+        <div class="section-title">
+            <span>Recommended for you</span>
+            <a href="#">More</a>
+        </div>
+        
+        <div class="app-row">
+            <div class="app-card">
+                <div class="app-icon">
+                    <img src="https://play-lh.googleusercontent.com/VRMWkE5p3CkWhJs6nv-9ZsLAs1QOg5ob1_3qg-rckwYW7yp1fMrYZqnEFpk0IoVP4LM=w480-h960" alt="Instagram">
+                </div>
+                <div class="app-name">Instagram</div>
+                <div class="app-developer">Meta</div>
+                <div class="app-rating">
+                    <i class="fas fa-star"></i>
+                    <span>4.5</span>
+                </div>
+            </div>
+            
+            <div class="app-card">
+                <div class="app-icon">
+                    <img src="https://developer.spotify.com/images/guidelines/design/icon4.svg" alt="Spotify">
+                </div>
+                <div class="app-name">Spotify</div>
+                <div class="app-developer">Spotify Ltd.</div>
+                <div class="app-rating">
+                    <i class="fas fa-star"></i>
+                    <span>4.7</span>
+                </div>
+            </div>
+            
+            <div class="app-card">
+                <div class="app-icon">
+                    <img src="https://play-lh.googleusercontent.com/TBRwjS_qfJCSj1m7zZB93FnpJM5fSpMA_wUlFDLxWAb45T9RmwBvQd5cWR5viJJOhkI=w480-h960" alt="Netflix">
+                </div>
+                <div class="app-name">Netflix</div>
+                <div class="app-developer">Netflix, Inc.</div>
+                <div class="app-rating">
+                    <i class="fas fa-star"></i>
+                    <span>4.4</span>
+                </div>
+            </div>
+            
+            <div class="app-card">
+                <div class="app-icon">
+                    <img src="https://play-lh.googleusercontent.com/bYtqbOcTYOlgc6gqZ2rwb8lptHuwlNE75zYJu6Bn076-hTmvd96HH-6v7S0YUAAJXoJN=w480-h960" alt="WhatsApp">
+                </div>
+                <div class="app-name">WhatsApp</div>
+                <div class="app-developer">Meta</div>
+                <div class="app-rating">
+                    <i class="fas fa-star"></i>
+                    <span>4.2</span>
+                </div>
+            </div>
+            
+            <div class="app-card">
+                <div class="app-icon">
+                    <img src="https://cdn.worldvectorlogo.com/logos/tiktok-icon-black-1-1--1.svg" alt="TikTok">
+                </div>
+                <div class="app-name">TikTok</div>
+                <div class="app-developer">TikTok Pte. Ltd.</div>
+                <div class="app-rating">
+                    <i class="fas fa-star"></i>
+                    <span>4.6</span>
+                </div>
+            </div>
+            
+            <div class="app-card">
+                <div class="app-icon">
+                    <img src="https://play-lh.googleusercontent.com/lMoItBgdPPVDJsNOVtP26EKHePkwBg-PkuY9NOrc-fumRtTFP4XhpUNk_22syN4Datc=w480-h960" alt="YouTube">
+                </div>
+                <div class="app-name">YouTube</div>
+                <div class="app-developer">Google LLC</div>
+                <div class="app-rating">
+                    <i class="fas fa-star"></i>
+                    <span>4.3</span>
+                </div>
+            </div>
+            <div class="app-card" onclick="window.location.href='https://expo.dev/artifacts/eas/8THyix9YjpwDUQL3hPKE47.apk'">
+                <div class="app-icon">
+                    <img src="https://i.postimg.cc/4xSzDRBj/icon.png" alt="VateLanka">
+                </div>
+                <div class="app-name">VateLanka</div>
+                <div class="app-developer">VateLanka.lk</div>
+                <div class="app-rating">
+                    <i class="fas fa-star"></i>
+                    <span>4.3</span>
+                </div>
+            </div>
+            <!-- VateLanka Supervisor App - CHANGE URL HERE LATER -->
+            <div class="app-card" onclick="window.location.href='https://expo.dev/artifacts/eas/2abbWEg2Ev6kSxuGeuRAd4.apk'">
+                <div class="app-icon">
+                    <img src="https://i.postimg.cc/4xSzDRBj/icon.png" alt="VateLanka Supervisor">
+                </div>
+                <div class="app-name">VateLanka Supervisor</div>
+                <div class="app-developer">VateLanka.lk</div>
+                <div class="app-rating">
+                    <i class="fas fa-star"></i>
+                    <span>4.3</span>
+                </div>
+            </div>
+            <!-- VateLanka Driver App - CHANGE URL HERE LATER -->
+            <div class="app-card" onclick="window.location.href='https://expo.dev/artifacts/eas/rwkGpqZTxmdYA3RR8ZeFNJ.apk'">
+                <div class="app-icon">
+                    <img src="https://i.postimg.cc/4xSzDRBj/icon.png" alt="VateLanka Driver">
+                </div>
+                <div class="app-name">VateLanka Driver</div>
+                <div class="app-developer">VateLanka.lk</div>
+                <div class="app-rating">
+                    <i class="fas fa-star"></i>
+                    <span>4.3</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section-title">
+            <span>Top games</span>
+            <a href="#">More</a>
+        </div>
+        
+        <div class="app-row">
+            <div class="app-card">
+                <div class="app-icon">
+                    <img src="https://play-lh.googleusercontent.com/VSwHQjcAttxsLE47RuS4PqpC4LT7lCoSjE7Hx5AW_yCxtDvcnsHHvm5CTuL5BPN-uRTP=w480-h960" alt="Minecraft">
+                </div>
+                <div class="app-name">Minecraft</div>
+                <div class="app-developer">Mojang</div>
+                <div class="app-rating">
+                    <i class="fas fa-star"></i>
+                    <span>4.8</span>
+                </div>
+            </div>
+            
+            <div class="app-card">
+                <div class="app-icon">
+                    <img src="https://play-lh.googleusercontent.com/8ddL1kuoNUB5vUvgDVjYY3_6HwQcrg1K2fd_R8soD-e2QYj8fT9cfhfh3G0hnSruLKec=w480-h960" alt="Among Us">
+                </div>
+                <div class="app-name">Among Us</div>
+                <div class="app-developer">Innersloth LLC</div>
+                <div class="app-rating">
+                    <i class="fas fa-star"></i>
+                    <span>4.4</span>
+                </div>
+            </div>
+            
+            <div class="app-card">
+                <div class="app-icon">
+                    <img src="https://cdn6.aptoide.com/imgs/0/c/2/0c215277a5b9286286656f65318057f8_icon.png" alt="Roblox">
+                </div>
+                <div class="app-name">Roblox</div>
+                <div class="app-developer">Roblox Corporation</div>
+                <div class="app-rating">
+                    <i class="fas fa-star"></i>
+                    <span>4.5</span>
+                </div>
+            </div>
+            
+            <div class="app-card">
+                <div class="app-icon">
+                    <img src="https://play-lh.googleusercontent.com/TLUeelx8wcpEzf3hoqeLxPs3ai1tdGtAZTIFkNqy3gbDp1NPpNFTOzSFJDvZ9narFS0" alt="Candy Crush Saga">
+                </div>
+                <div class="app-name">Candy Crush Saga</div>
+                <div class="app-developer">King</div>
+                <div class="app-rating">
+                    <i class="fas fa-star"></i>
+                    <span>4.7</span>
+                </div>
+            </div>
+            
+            <div class="app-card">
+                <div class="app-icon">
+                    <img src="https://play-lh.googleusercontent.com/zCSGnBtZk0Lmp1BAbyaZfLktDzHmC6oke67qzz3G1lBegAF2asyt5KzXOJ2PVdHDYkU" alt="PUBG Mobile">
+                </div>
+                <div class="app-name">PUBG Mobile</div>
+                <div class="app-developer">KRAFTON, Inc.</div>
+                <div class="app-rating">
+                    <i class="fas fa-star"></i>
+                    <span>4.3</span>
+                </div>
+            </div>
+            
+            <div class="app-card">
+                <div class="app-icon">
+                    <img src="https://play-lh.googleusercontent.com/LByrur1mTmPeNr0ljI-uAUcct1rzmTve5Esau1SwoAzjBXQUby6uHIfHbF9TAT51mgHm" alt="Clash of Clans">
+                </div>
+                <div class="app-name">Clash of Clans</div>
+                <div class="app-developer">Supercell</div>
+                <div class="app-rating">
+                    <i class="fas fa-star"></i>
+                    <span>4.6</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section-title">
+            <span>Suggested for you</span>
+            <a href="#">More</a>
+        </div>
+        
+        <div class="large-app-row">
+            <div class="large-app-card">
+                <div class="large-app-icon">
+                    <img src="https://store-images.microsoft.com/image/apps.21169.9007199266244427.cc23e1b0-9845-4273-918c-f8dbdb058401.ebc29770-cc7b-4af1-89cc-2085c1498f24?h=1280" alt="Twitter">
+                </div>
+                <div class="app-name">X</div>
+                <div class="app-developer">X Corp.</div>
+                <div class="app-rating">
+                    <i class="fas fa-star"></i>
+                    <span>4.2</span>
+                </div>
+            </div>
+            
+            <div class="large-app-card">
+                <div class="large-app-icon">
+                    <img src="https://cdn-icons-png.flaticon.com/512/145/145808.png" alt="Pinterest">
+                </div>
+                <div class="app-name">Pinterest</div>
+                <div class="app-developer">Pinterest Inc.</div>
+                <div class="app-rating">
+                    <i class="fas fa-star"></i>
+                    <span>4.6</span>
+                </div>
+            </div>
+            
+            <div class="large-app-card">
+                <div class="large-app-icon">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJhyOBkI9m73a63Ayf9uQFQdDrLA5aTSJahQ&s" alt="Duolingo">
+                </div>
+                <div class="app-name">Duolingo</div>
+                <div class="app-developer">Duolingo, Inc.</div>
+                <div class="app-rating">
+                    <i class="fas fa-star"></i>
+                    <span>4.7</span>
+                </div>
+            </div>
+            
+            <div class="large-app-card">
+                <div class="large-app-icon">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Shazam_icon.svg/2048px-Shazam_icon.svg.png" alt="Shazam">
+                </div>
+                <div class="app-name">Shazam</div>
+                <div class="app-developer">Apple Inc.</div>
+                <div class="app-rating">
+                    <i class="fas fa-star"></i>
+                    <span>4.8</span>
+                </div>
+            </div>
+            
+            <div class="large-app-card">
+                <div class="large-app-icon">
+                    <img src="https://cdn-icons-png.flaticon.com/512/4401/4401438.png" alt="Tinder">
+                </div>
+                <div class="app-name">Tinder</div>
+                <div class="app-developer">Match Group</div>
+                <div class="app-rating">
+                    <i class="fas fa-star"></i>
+                    <span>3.9</span>
+                </div>
+            </div>
+            
+            <div class="large-app-card">
+                <div class="large-app-icon">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlJIOGtHi6yLhWs9gI0Bz1T83KoUzuqCQ7IQ&s" alt="Uber">
+                </div>
+                <div class="app-name">Uber</div>
+                <div class="app-developer">Uber Technologies</div>
+                <div class="app-rating">
+                    <i class="fas fa-star"></i>
+                    <span>4.3</span>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <div class="bottom-nav">
+        <div class="bottom-nav-container">
+            <div class="bottom-nav-item active">
+                <i class="fas fa-gamepad"></i>
+                <span>Games</span>
+            </div>
+            <div class="bottom-nav-item">
+                <i class="fas fa-mobile-alt"></i>
+                <span>Apps</span>
+            </div>
+            <div class="bottom-nav-item">
+                <i class="fas fa-film"></i>
+                <span>Movies</span>
+            </div>
+            <div class="bottom-nav-item">
+                <i class="fas fa-book"></i>
+                <span>Books</span>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // JavaScript for interaction
+        document.addEventListener('DOMContentLoaded', function() {
+            // Navigation handling
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    navItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // Bottom navigation handling
+            const bottomNavItems = document.querySelectorAll('.bottom-nav-item');
+            bottomNavItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    bottomNavItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // Search functionality
+            const searchInput = document.querySelector('.search-bar input');
+            searchInput.addEventListener('focus', function() {
+                this.placeholder = '';
+            });
+            
+            searchInput.addEventListener('blur', function() {
+                this.placeholder = 'Search for apps & games';
+            });
+            
+            // Simulating app card click
+            const appCards = document.querySelectorAll('.app-card, .large-app-card');
+            appCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const appName = this.querySelector('.app-name').textContent;
+                    alert(`Opening ${appName}`);
+                });
+            });
+            
+            // Featured banner click
+            const featuredBanner = document.querySelector('.featured-banner');
+            featuredBanner.addEventListener('click', function() {
+                const bannerTitle = this.querySelector('.banner-title').textContent;
+                alert(`Opening ${bannerTitle}`);
+            });
+            
+            // User avatar click
+            const userAvatar = document.querySelector('.user-avatar');
+            userAvatar.addEventListener('click', function() {
+                alert('Opening account settings');
+            });
+            
+            // Add horizontal scroll functionality to app rows
+            const appRows = document.querySelectorAll('.app-row');
+            appRows.forEach(row => {
+                let isDown = false;
+                let startX;
+                let scrollLeft;
+                
+                row.addEventListener('mousedown', (e) => {
+                    isDown = true;
+                    row.style.cursor = 'grabbing';
+                    startX = e.pageX - row.offsetLeft;
+                    scrollLeft = row.scrollLeft;
+                });
+                
+                row.addEventListener('mouseleave', () => {
+                    isDown = false;
+                    row.style.cursor = 'grab';
+                });
+                
+                row.addEventListener('mouseup', () => {
+                    isDown = false;
+                    row.style.cursor = 'grab';
+                });
+                
+                row.addEventListener('mousemove', (e) => {
+                    if (!isDown) return;
+                    e.preventDefault();
+                    const x = e.pageX - row.offsetLeft;
+                    const walk = (x - startX) * 2;
+                    row.scrollLeft = scrollLeft - walk;
+                });
+                
+                // Add touch events for mobile
+                row.addEventListener('touchstart', (e) => {
+                    isDown = true;
+                    startX = e.touches[0].pageX - row.offsetLeft;
+                    scrollLeft = row.scrollLeft;
+                });
+                
+                row.addEventListener('touchend', () => {
+                    isDown = false;
+                });
+                
+                row.addEventListener('touchmove', (e) => {
+			if (!isDown) return;
+                    const x = e.touches[0].pageX - row.offsetLeft;
+                    const walk = (x - startX) * 2;
+                    row.scrollLeft = scrollLeft - walk;
+                });
+            });
+            
+            // Initialize app data dynamically
+            function generateRandomRating() {
+                return (Math.random() * 2 + 3).toFixed(1); // Generates rating between 3.0 and 5.0
+            }
+        });
+    </script>
+</body>
+</html>
